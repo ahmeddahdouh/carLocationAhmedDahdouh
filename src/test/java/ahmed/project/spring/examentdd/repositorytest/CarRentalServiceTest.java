@@ -53,7 +53,7 @@ class CarRentalServiceTest {
         Car car = new Car("ABC-123", "Honda", false);
         CarRepository spyRepo = spy(new CarRepository());
         spyRepo.addCar(car);
-        CarRentalService service = new CarRentalService();
+        CarRentalService service = new CarRentalService(carRepository);
         ReflectionTestUtils.setField(service, "carRepository", spyRepo);
 
         service.returnCar("ABC-123");

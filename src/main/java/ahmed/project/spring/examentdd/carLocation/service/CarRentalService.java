@@ -16,6 +16,11 @@ public class CarRentalService {
     @Autowired
     private CarRepository carRepository;
 
+    public CarRentalService(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
+
+
     public List<Car> getAllCars() {
         return carRepository.getAllCars();
     }
@@ -54,5 +59,10 @@ public class CarRentalService {
                 .collect(Collectors.toList());
     }
 
+    public List<Car> getAvailableCars() {
+        return carRepository.getAllCars().stream()
+                .filter(Car::isAvailable)
+                .collect(Collectors.toList());
+    }
 
 }
