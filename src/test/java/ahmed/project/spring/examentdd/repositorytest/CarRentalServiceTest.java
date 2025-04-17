@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,6 +72,8 @@ class CarRentalServiceTest {
         verify(carRepository).addCar(car);
     }
 
+
+
     @Test
     void shouldNotAddCarIfAlreadyExists() {
         Car existing = new Car("NEW-001", "Tesla", true);
@@ -79,6 +82,24 @@ class CarRentalServiceTest {
         assertThrows(RuntimeException.class, () -> service.addCar(existing));
         verify(carRepository, never()).addCar(existing);
     }
+
+    //partie 2
+
+    @Test
+    void shouldFindCarsByModel() {
+        List<Car> cars = List.of(
+                new Car("1", "Toyota", true),
+                new Car("2", "Toyota", false)
+        );
+        when(carRepository.getAllCars()).thenReturn(cars);
+
+        List<Car> result = service.searchByModel("Toyota");
+
+        assertEquals(2, result.size());
+    }
+
+
+
 
 
 

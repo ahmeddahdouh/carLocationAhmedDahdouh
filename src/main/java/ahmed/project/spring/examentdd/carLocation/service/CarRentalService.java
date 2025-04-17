@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CarRentalService {
@@ -37,6 +38,21 @@ public class CarRentalService {
         });
     }
 
-    public void addCar(Car existing) {
+    public boolean addCar(Car car) {
+        Optional<Car> existingCar = carRepository.findByRegistrationNumber(car.getRegistrationNumber());
+        if (existingCar.isPresent()) {
+            throw new RuntimeException("Car with registration number already exists");
+        }
+        carRepository.addCar(car);
+        return false;
     }
+
+
+    public List<Car> searchByModel(String model) {
+        return carRepository.getAllCars().stream()
+                .filter(car -> car.getModel().equalsIgnoreCase(model))
+                .collect(Collectors.toList());
+    }
+
+
 }

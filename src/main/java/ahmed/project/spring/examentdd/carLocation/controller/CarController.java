@@ -27,4 +27,9 @@ public class CarController {
     public void returnCar(@PathVariable String registrationNumber) {
         carRentalService.returnCar(registrationNumber);
     }
+
+    @PostMapping("/add")
+    public boolean addCar(@RequestBody Car car) {
+        return carRentalService.addCar(car);
+    }
 }
