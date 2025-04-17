@@ -1,13 +1,13 @@
-package ahmed.project.spring.examentdd;
+package ahmed.project.spring.examentdd.carLocation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ExamenTddApplication {
+public class CarRentalApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ExamenTddApplication.class, args);
+        SpringApplication.run(CarRentalApplication.class, args);
     }
 
 }
