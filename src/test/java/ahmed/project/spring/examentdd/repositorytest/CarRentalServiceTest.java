@@ -12,8 +12,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,6 +60,26 @@ class CarRentalServiceTest {
         verify(spyRepo).updateCar(any(Car.class));
         assertTrue(car.isAvailable());
     }
+
+    @Test
+    void shouldAddCarIfNotExists() {
+        Car car = new Car("NEW-001", "Tesla", true);
+        when(carRepository.findByRegistrationNumber("NEW-001")).thenReturn(Optional.empty());
+
+        service.addCar(car);
+
+        verify(carRepository).addCar(car);
+    }
+
+    @Test
+    void shouldNotAddCarIfAlreadyExists() {
+        Car existing = new Car("NEW-001", "Tesla", true);
+        when(carRepository.findByRegistrationNumber("NEW-001")).thenReturn(Optional.of(existing));
+
+        assertThrows(RuntimeException.class, () -> service.addCar(existing));
+        verify(carRepository, never()).addCar(existing);
+    }
+
 
 
 

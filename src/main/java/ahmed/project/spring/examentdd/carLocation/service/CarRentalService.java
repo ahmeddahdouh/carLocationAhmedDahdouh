@@ -36,4 +36,7 @@ public class CarRentalService {
             carRepository.updateCar(c);
         });
     }
+
+    public void addCar(Car existing) {
+    }
 }
